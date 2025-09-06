@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # The backend service definition.
+  backend:
+    # Specifies the build context (the directory containing the Dockerfile).
+    build: ./backend2
+    container_name: my-backend-container
+    ports:
+      # Maps port 3000 on the host to port 3000 in the container.
+      # Assumes your Node.js app runs on port 3000.
+      - "3000:3000"
+
+  # The frontend service definition.
+  frontend:
+    build: ./frontend2
+    container_name: my-frontend-container
+    ports:
+      # Maps port 8080 on the host to port 80 in the Nginx container.
+      - "8080:80"
+    # Ensures the backend service is started before the frontend service.
+    depends_on:
+      - backend
